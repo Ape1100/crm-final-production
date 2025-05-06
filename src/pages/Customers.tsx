@@ -62,7 +62,7 @@ export default function Customers() {
     const customerNumber = `CUS-${uuidv4().slice(0, 8).toUpperCase()}`;
     
     try {
-      const { data } = await supabase
+      await supabase
         .from('customers')
         .insert([
           {
@@ -72,8 +72,7 @@ export default function Customers() {
             email: newCustomer.email,
             phone: newCustomer.phone,
           }
-        ])
-        .select();
+        ]);
 
       setShowAddModal(false);
       setNewCustomer({ firstName: '', lastName: '', email: '', phone: '' });
@@ -92,7 +91,7 @@ export default function Customers() {
     setLoading(true);
 
     try {
-      const { data } = await supabase
+      await supabase
         .from('customers')
         .update({
           first_name: selectedCustomer.first_name,

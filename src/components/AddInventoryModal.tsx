@@ -4,12 +4,11 @@ import { supabase } from '../lib/supabase';
 import type { InventoryCategory } from '../types';
 
 interface AddInventoryModalProps {
-  categories: InventoryCategory[];
   onClose: () => void;
   onItemAdded: () => void;
 }
 
-export function AddInventoryModal({ categories, onClose, onItemAdded }: AddInventoryModalProps) {
+export function AddInventoryModal({ onClose, onItemAdded }: AddInventoryModalProps) {
   const [formData, setFormData] = useState({
     sku: '',
     name: '',

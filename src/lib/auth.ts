@@ -62,7 +62,7 @@ export async function updatePassword(newPassword: string) {
 
 // Auth state management
 export function onAuthStateChange(callback: (session: any) => void) {
-  return supabase.auth.onAuthStateChange((event, session) => {
+  return supabase.auth.onAuthStateChange((_, session) => {
     callback(session);
   });
 }

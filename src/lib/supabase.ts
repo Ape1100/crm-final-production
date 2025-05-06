@@ -124,7 +124,7 @@ export async function handleSupabaseError<T>(
 }
 
 // Initialize auth state change listener
-supabase.auth.onAuthStateChange((event, session) => {
+supabase.auth.onAuthStateChange((event) => {
   if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
     // Reconnect realtime on auth changes
     const channel = supabase.channel('any')
