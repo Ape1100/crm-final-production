@@ -12,6 +12,8 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2
 });
 
+type DashboardInvoice = { amount: number; created_at: string; status: string };
+
 export default function Dashboard() {
   const [stats, setStats] = useState({
     totalCustomers: 0,
@@ -46,28 +48,28 @@ export default function Dashboard() {
       if (invoicesError) throw invoicesError;
 
       // Use null coalescing to handle undefined/null values
-      const safeInvoices = invoices ?? [];
+      const safeInvoices: DashboardInvoice[] = invoices ?? [];
       const safeTotalCustomers = customerCount ?? 0;
 
       // Calculate total invoices and revenue
       const totalInvoices = safeInvoices.length;
       const totalRevenue = safeInvoices
-        .filter(inv => inv.status === 'paid')
-        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
+        .filter((inv: DashboardInvoice) => inv.status === 'paid')
+        .reduce((sum: number, inv: DashboardInvoice) => sum + (Number(inv.amount) || 0), 0);
 
       // Calculate growth (comparing this month to last month)
       const now = new Date();
       const thisMonth = safeInvoices
-        .filter(inv => {
+        .filter((inv: DashboardInvoice) => {
           const date = new Date(inv.created_at);
           return date.getMonth() === now.getMonth() && 
                  date.getFullYear() === now.getFullYear() &&
                  inv.status === 'paid';
         })
-        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
+        .reduce((sum: number, inv: DashboardInvoice) => sum + (Number(inv.amount) || 0), 0);
 
       const lastMonth = safeInvoices
-        .filter(inv => {
+        .filter((inv: DashboardInvoice) => {
           const date = new Date(inv.created_at);
           const lastMonthDate = new Date();
           lastMonthDate.setMonth(lastMonthDate.getMonth() - 1);
@@ -75,7 +77,7 @@ export default function Dashboard() {
                  date.getFullYear() === lastMonthDate.getFullYear() &&
                  inv.status === 'paid';
         })
-        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
+        .reduce((sum: number, inv: DashboardInvoice) => sum + (Number(inv.amount) || 0), 0);
 
       const growth = lastMonth ? ((thisMonth - lastMonth) / lastMonth) * 100 : 0;
 
