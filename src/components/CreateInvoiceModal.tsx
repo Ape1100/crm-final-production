@@ -8,9 +8,10 @@ import type { Customer, InvoiceItem, InvoiceSettings } from '../types';
 interface CreateInvoiceModalProps {
   onClose: () => void;
   onInvoiceCreated: () => void;
+  onCreated?: (newInvoice: any) => void;
 }
 
-export function CreateInvoiceModal({ onClose, onInvoiceCreated }: CreateInvoiceModalProps) {
+export function CreateInvoiceModal({ onClose, onInvoiceCreated, onCreated }: CreateInvoiceModalProps) {
   const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -149,6 +150,7 @@ export function CreateInvoiceModal({ onClose, onInvoiceCreated }: CreateInvoiceM
         });
 
       if (error) throw error;
+      if (onCreated) onCreated({ /* pass the new invoice object here if available */ });
       onInvoiceCreated();
       onClose();
     } catch (error) {

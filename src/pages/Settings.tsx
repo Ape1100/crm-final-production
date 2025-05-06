@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Upload, X, Bell, FileText, Mail, DollarSign, Save, Globe, Users,
+  Upload, X, FileText, Mail, DollarSign, Save, Globe, Users,
   Shield, Clock, CreditCard, BarChart, Package, AlertCircle, Plus
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -19,8 +19,8 @@ export function Settings() {
     website: ''
   });
   const [logo, setLogo] = useState<File | null>(null);
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | undefined>(undefined);
+  const [logoUrl, setLogoUrl] = useState<string | undefined>(undefined);
   const [logoError, setLogoError] = useState('');
   const [loading, setLoading] = useState(false);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
@@ -46,7 +46,7 @@ export function Settings() {
     }
 
     if (data) {
-      setLogoUrl(data.logo_url || null);
+      setLogoUrl(data.logo_url || undefined);
       setProfile({
         name: data.business_name || '',
         address: data.address || '',
@@ -97,7 +97,7 @@ export function Settings() {
       const previewUrl = URL.createObjectURL(file);
       setLogoPreview(previewUrl);
     } else {
-      setLogoPreview(null);
+      setLogoPreview(undefined);
     }
 
     setLogo(file);
@@ -223,8 +223,8 @@ export function Settings() {
                     <button
                       type="button"
                       onClick={() => {
-                        setLogoUrl(null);
-                        setLogoPreview(null);
+                        setLogoUrl(undefined);
+                        setLogoPreview(undefined);
                         setLogo(null);
                       }}
                       className="absolute -top-2 -right-2 bg-red-100 rounded-full p-1 text-red-600 hover:bg-red-200"

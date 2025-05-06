@@ -88,6 +88,12 @@ export interface InventoryItem {
   unit_price: number;
   created_at: Date;
   updated_at: Date;
+  sku: string;
+  price: number;
+  stock_quantity: number;
+  reorder_point: number;
+  batch_tracking?: boolean;
+  expiration_date?: string;
 }
 
 export interface CustomerNote {

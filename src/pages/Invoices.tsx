@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Download, DollarSign, Clock, CheckCircle, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Plus, Search, Filter, Download, DollarSign, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
-import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../lib/supabase';
 import { CreateInvoiceModal } from '../components/CreateInvoiceModal';
 import { ViewInvoiceModal } from '../components/ViewInvoiceModal';
 import { EditInvoiceModal } from '../components/EditInvoiceModal';
 import type { Invoice } from '../types';
+import { useState, useEffect } from 'react';
 
 // Currency formatter
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -306,7 +305,8 @@ export default function Invoices() {
       {showCreateModal && (
         <CreateInvoiceModal
           onClose={() => setShowCreateModal(false)}
-          onCreated={(newInvoice) => {
+          onInvoiceCreated={() => {}}
+          onCreated={(newInvoice: Invoice) => {
             setInvoices([newInvoice, ...invoices]);
             setShowCreateModal(false);
           }}
