@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Upload, X, FileText, Mail, DollarSign, Save, Globe, Users,
-  Shield, Clock, CreditCard, BarChart, Package, AlertCircle, Plus
-} from 'lucide-react';
+import { Upload, X, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import type { 
-  BusinessProfile, GeneralSettings, Subscription, 
-  TeamMember, UserRole, ActivityLog, Profile 
-} from '../types';
+import type { BusinessProfile, ActivityLog } from '../types';
 
 export function Settings() {
   const [activeTab, setActiveTab] = useState('general');

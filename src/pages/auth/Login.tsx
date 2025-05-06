@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import { signIn, signInSchema } from '../../lib/auth';
-import type { z } from 'zod';
+import { z } from 'zod';
 
 export default function Login() {
   const navigate = useNavigate();

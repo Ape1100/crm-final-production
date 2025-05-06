@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle, Trash2, RefreshCw, Bell, MailOpen, Mail } from 'lucide-react';
 import { format } from 'date-fns';
 import { supabase } from '../lib/supabase';

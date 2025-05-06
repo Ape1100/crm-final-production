@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus } from 'lucide-react';
 import { signUp, signUpSchema } from '../../lib/auth';
-import type { z } from 'zod';
+import { z } from 'zod';
 
 export default function Register() {
   const navigate = useNavigate();
