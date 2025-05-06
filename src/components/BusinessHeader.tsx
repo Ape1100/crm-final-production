@@ -37,11 +37,15 @@ export function BusinessHeader({ className = '', showContact = true, variant = '
       setIsLoading(true);
       
       const data = await handleSupabaseError(
-        supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session!.user.id)
-          .single(),
+        (async () => {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session!.user.id)
+            .single();
+          if (error) throw error;
+          return { data, error };
+        })(),
         MAX_RETRIES,
         INITIAL_RETRY_DELAY
       );

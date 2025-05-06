@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Users, FileText, DollarSign, TrendingUp, AlertCircle } from 'lucide-react';
 import { BusinessHeader } from '../components/BusinessHeader';
+import { supabase } from '../lib/supabase';
+import type { Invoice } from '../types';
 
 // Currency formatter
 const currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -51,7 +53,7 @@ export default function Dashboard() {
       const totalInvoices = safeInvoices.length;
       const totalRevenue = safeInvoices
         .filter(inv => inv.status === 'paid')
-        .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
 
       // Calculate growth (comparing this month to last month)
       const now = new Date();
@@ -62,7 +64,7 @@ export default function Dashboard() {
                  date.getFullYear() === now.getFullYear() &&
                  inv.status === 'paid';
         })
-        .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
 
       const lastMonth = safeInvoices
         .filter(inv => {
@@ -73,7 +75,7 @@ export default function Dashboard() {
                  date.getFullYear() === lastMonthDate.getFullYear() &&
                  inv.status === 'paid';
         })
-        .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+        .reduce((sum: number, inv: Invoice) => sum + (Number(inv.amount) || 0), 0);
 
       const growth = lastMonth ? ((thisMonth - lastMonth) / lastMonth) * 100 : 0;
 
