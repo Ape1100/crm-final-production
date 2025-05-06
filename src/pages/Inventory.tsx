@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Search, Filter, AlertCircle, Package, BarChart, Settings } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { AddInventoryModal } from '../components/AddInventoryModal';

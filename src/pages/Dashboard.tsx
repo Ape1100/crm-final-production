@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Users, FileText, DollarSign, TrendingUp, AlertCircle } from 'lucide-react';
 import { BusinessHeader } from '../components/BusinessHeader';
-import { supabase, handleSupabaseError } from '../lib/supabase';
 
 // Currency formatter
 const currencyFormatter = new Intl.NumberFormat('en-US', {

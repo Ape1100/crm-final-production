@@ -13,12 +13,6 @@ interface Message {
   invoice_id?: string;
 }
 
-interface EmailOpen {
-  id: string;
-  invoice_id: string;
-  opened_at: string;
-}
-
 export default function Messages() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);

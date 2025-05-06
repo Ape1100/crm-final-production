@@ -46,6 +46,7 @@ export interface Customer {
   email?: string;
   phone?: string;
   created_at: Date;
+  products_services?: { name: string }[];
 }
 
 export interface BusinessProfile {

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { Printer, ArrowDownToLine, X, CheckCircle } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { supabase } from '../lib/supabase';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Search, Calendar, Bell, Edit, Mail } from 'lucide-react';
 import { format } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase, handleSupabaseError } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import type { Customer, CustomerNote } from '../types';
 
 export default function Customers() {
@@ -27,16 +27,14 @@ export default function Customers() {
 
   async function fetchCustomers() {
     try {
-      const data = await handleSupabaseError(
-        supabase
-          .from('customers')
-          .select(`
-            *,
-            products_services (*),
-            customer_notes (*)
-          `)
-          .order('created_at', { ascending: false })
-      );
+      const { data } = await supabase
+        .from('customers')
+        .select(`
+          *,
+          products_services (*),
+          customer_notes (*)
+        `)
+        .order('created_at', { ascending: false });
       setCustomers(data || []);
     } catch (error) {
       console.error('Error fetching customers:', error);
@@ -45,14 +43,12 @@ export default function Customers() {
 
   async function fetchReminders() {
     try {
-      const data = await handleSupabaseError(
-        supabase
-          .from('customer_notes')
-          .select('*, customers!inner(*)')
-          .eq('is_reminder', true)
-          .gte('reminder_date', new Date().toISOString())
-          .order('reminder_date', { ascending: true })
-      );
+      const { data } = await supabase
+        .from('customer_notes')
+        .select('*, customers!inner(*)')
+        .eq('is_reminder', true)
+        .gte('reminder_date', new Date().toISOString())
+        .order('reminder_date', { ascending: true });
       setReminders(data || []);
     } catch (error) {
       console.error('Error fetching reminders:', error);
@@ -66,20 +62,18 @@ export default function Customers() {
     const customerNumber = `CUS-${uuidv4().slice(0, 8).toUpperCase()}`;
     
     try {
-      const data = await handleSupabaseError(
-        supabase
-          .from('customers')
-          .insert([
-            {
-              customer_number: customerNumber,
-              first_name: newCustomer.firstName,
-              last_name: newCustomer.lastName,
-              email: newCustomer.email,
-              phone: newCustomer.phone,
-            }
-          ])
-          .select()
-      );
+      const { data } = await supabase
+        .from('customers')
+        .insert([
+          {
+            customer_number: customerNumber,
+            first_name: newCustomer.firstName,
+            last_name: newCustomer.lastName,
+            email: newCustomer.email,
+            phone: newCustomer.phone,
+          }
+        ])
+        .select();
 
       setShowAddModal(false);
       setNewCustomer({ firstName: '', lastName: '', email: '', phone: '' });
@@ -98,17 +92,15 @@ export default function Customers() {
     setLoading(true);
 
     try {
-      await handleSupabaseError(
-        supabase
-          .from('customers')
-          .update({
-            first_name: selectedCustomer.first_name,
-            last_name: selectedCustomer.last_name,
-            email: selectedCustomer.email,
-            phone: selectedCustomer.phone,
-          })
-          .eq('id', selectedCustomer.id)
-      );
+      const { data } = await supabase
+        .from('customers')
+        .update({
+          first_name: selectedCustomer.first_name,
+          last_name: selectedCustomer.last_name,
+          email: selectedCustomer.email,
+          phone: selectedCustomer.phone,
+        })
+        .eq('id', selectedCustomer.id);
 
       setShowEditModal(false);
       setSelectedCustomer(null);
@@ -217,7 +209,7 @@ export default function Customers() {
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-900">
-                    {customer.products_services?.map(p => p.name).join(', ')}
+                    {customer.products_services?.map((p: { name: string }) => p.name).join(', ')}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
