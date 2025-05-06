@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FastCRM</string>
+    <string name="title_activity_main">FastCRM</string>
+    <string name="package_name">com.fastcrm.app</string>
+    <string name="custom_url_scheme">com.fastcrm.app</string>
+</resources>
