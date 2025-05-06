@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { Printer, ArrowDownToLine, X, CheckCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { supabase } from '../lib/supabase';
 import { generatePDF } from '../lib/pdf';
@@ -13,23 +12,16 @@ interface ViewInvoiceModalProps {
 }
 
 export function ViewInvoiceModal({ invoice, onClose, onStatusChange }: ViewInvoiceModalProps) {
-  const [loading, setLoading] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showCustomerSelect, setShowCustomerSelect] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const [isPrinting, setIsPrinting] = useState(false);
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: `Invoice_${invoice.invoice_number}`,
     onAfterPrint: () => {
-      setIsPrinting(false);
     },
   });
 
   async function handleMarkAsPaid() {
-    setLoading(true);
     try {
       const { error } = await supabase
         .from('invoices')
@@ -42,8 +34,6 @@ export function ViewInvoiceModal({ invoice, onClose, onStatusChange }: ViewInvoi
     } catch (error) {
       console.error('Error marking invoice as paid:', error);
       alert('Failed to mark invoice as paid. Please try again.');
-    } finally {
-      setLoading(false);
     }
   }
 

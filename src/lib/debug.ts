@@ -51,12 +51,16 @@ export async function debugEmailTracking(invoiceId: string, customerId: string) 
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
+      return {
+        success: false,
+        error: error.message
+      };
     } else {
       console.error(error);
+      return {
+        success: false,
+        error: String(error)
+      };
     }
-    return {
-      success: false,
-      error: error.message
-    };
   }
 }

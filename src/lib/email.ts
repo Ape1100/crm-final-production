@@ -151,8 +151,11 @@ export async function sendInvoiceEmail({
       console.log('Email sent successfully');
       return result;
     } catch (fetchError) {
-      console.error('Fetch error details:', fetchError);
-      throw new Error(`Failed to send email: ${fetchError.message}`);
+      if (fetchError instanceof Error) {
+        throw new Error(`Failed to send email: ${fetchError.message}`);
+      } else {
+        throw new Error('Failed to send email: Unknown error');
+      }
     }
   } catch (error) {
     console.error('Error in sendInvoiceEmail:', error);
