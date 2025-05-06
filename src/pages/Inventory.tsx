@@ -252,7 +252,6 @@ export default function Inventory() {
       {/* Add Item Modal */}
       {showAddModal && (
         <AddInventoryModal
-          categories={categories}
           onClose={() => setShowAddModal(false)}
           onItemAdded={() => {
             fetchInventory();
