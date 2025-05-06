@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { X, Plus, Minus } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../lib/supabase';
-import { BusinessHeader } from './BusinessHeader';
 import { getInvoiceSettings } from '../lib/settings';
-import type { Customer, Invoice, InvoiceSettings, InvoiceItem } from '../types';
+import type { Customer, InvoiceItem, InvoiceSettings } from '../types';
 
 interface CreateInvoiceModalProps {
   onClose: () => void;

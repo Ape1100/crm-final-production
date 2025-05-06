@@ -1,5 +1,3 @@
-import { supabase } from './supabase';
-
 export async function debugEmailTracking(invoiceId: string, customerId: string) {
   try {
     // Check tracking status
@@ -51,7 +49,11 @@ export async function debugEmailTracking(invoiceId: string, customerId: string) 
       testResult
     };
   } catch (error) {
-    console.error('Debug error:', error);
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
     return {
       success: false,
       error: error.message

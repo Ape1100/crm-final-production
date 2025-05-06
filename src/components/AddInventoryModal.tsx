@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../lib/supabase';
 import type { InventoryCategory } from '../types';
 

@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Home, Users, FileText, Box, MessageCircle, Settings } from 'lucide-react';
 
 interface Tab {
@@ -17,8 +17,6 @@ const tabs: Tab[] = [
 ];
 
 export function BottomNav() {
-  const location = useLocation();
-
   return (
     <nav className="flex justify-around bg-white border-t shadow-lg h-10 pb-[env(safe-area-inset-bottom)]">
       {tabs.map(tab => (

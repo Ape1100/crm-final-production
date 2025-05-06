@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Zap } from 'lucide-react';
 
 export function SplashScreen() {

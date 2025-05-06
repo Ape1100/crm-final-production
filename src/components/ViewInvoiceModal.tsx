@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { Printer, Send, Eye, EyeOff, ArrowDownToLine, Mail, X, CheckCircle } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Printer, ArrowDownToLine, X, CheckCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { supabase } from '../lib/supabase';
 import { generatePDF } from '../lib/pdf';
-import { sendInvoiceEmail } from '../lib/email';
 import type { Invoice } from '../types';
 
 interface ViewInvoiceModalProps {
@@ -24,14 +23,9 @@ export function ViewInvoiceModal({ invoice, onClose, onStatusChange }: ViewInvoi
   const handlePrint = useReactToPrint({
     contentRef: printRef,
     documentTitle: `Invoice_${invoice.invoice_number}`,
-    removeAfterPrint: true,
     onAfterPrint: () => {
       setIsPrinting(false);
     },
-    onBeforeGetContent: () => {
-      setIsPrinting(true);
-      return Promise.resolve();
-    }
   });
 
   async function handleMarkAsPaid() {
