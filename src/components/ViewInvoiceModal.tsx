@@ -3,6 +3,7 @@ import { Printer, ArrowDownToLine, X, CheckCircle } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { supabase } from '../lib/supabase';
 import { generatePDF } from '../lib/pdf';
+import { sendInvoiceEmail } from '../lib/email';
 import type { Invoice } from '../types';
 
 interface ViewInvoiceModalProps {
@@ -54,6 +55,24 @@ export function ViewInvoiceModal({ invoice, onClose, onStatusChange }: ViewInvoi
     }
   }
 
+  async function handleSendEmail() {
+    if (!invoice.customers) {
+      alert('No customer information available for this invoice.');
+      return;
+    }
+    try {
+      await sendInvoiceEmail({
+        invoice,
+        customer: invoice.customers,
+        invoice_id: invoice.id,
+        customer_id: invoice.customers.id,
+      });
+      alert('Invoice email sent!');
+    } catch (error) {
+      alert('Failed to send invoice email.');
+    }
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-full max-w-4xl m-4">
@@ -84,6 +103,13 @@ export function ViewInvoiceModal({ invoice, onClose, onStatusChange }: ViewInvoi
           >
             <ArrowDownToLine size={20} className="inline-block mr-2" />
             Download
+          </button>
+          <button
+            type="button"
+            onClick={handleSendEmail}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Email Invoice
           </button>
           {invoice.status !== 'paid' && (
             <button

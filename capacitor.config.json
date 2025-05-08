@@ -3,10 +3,6 @@
   "appName": "FastCRM",
   "webDir": "dist",
   "bundledWebRuntime": false,
-  "server": {
-    "url": "http://localhost:5173",
-    "cleartext": true
-  },
   "android": {
     "allowMixedContent": true
   }
